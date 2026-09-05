@@ -1262,7 +1262,7 @@ if ($usedLeavesQuery && mysqli_num_rows($usedLeavesQuery) > 0) {
                                     <span style="display:inline-flex; align-items:center; gap:4px; margin-right:10px;"><i class="fa fa-phone" style="color:#333; opacity:0.7;"></i> <?php echo $phone; ?></span>
                                     <span style="display:inline-flex; align-items:center; gap:4px;"><i class="fa fa-envelope" style="color:#dd2127; opacity:0.8;"></i> <?php echo htmlspecialchars(!empty($row['company_email']) ? $row['company_email'] : $email); ?></span>
                                 </div>
-                                <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;"><i class="fa fa-calendar-check-o"></i> Joined: <?php echo (!empty($row['join_date']) && $row['join_date'] !== '0000-00-00') ? date('d-m-Y', strtotime($row['join_date'])) : '-'; ?></div>
+                                <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;"><i class="fa fa-calendar-check-o"></i> Join Date: <?php echo (!empty($row['join_date']) && $row['join_date'] !== '0000-00-00') ? date('d-m-Y', strtotime($row['join_date'])) : '-'; ?></div>
                             </td>
                             <td class="text-center" style="text-align: center;">
                                 <?php if (!empty($row['designation']) && $row['designation'] !== 'Not Assigned'): ?>
