@@ -264,6 +264,16 @@ if ($checkExtraCol && mysqli_num_rows($checkExtraCol) == 0) {
     @mysqli_query($con, "ALTER TABLE emp_list ADD COLUMN extra_leaves INT(11) DEFAULT 0");
 }
 
+// phone_number was typed as INT(11) which overflows for any real 10-digit mobile
+// number (max signed int is 2147483647), silently clamping every number to that
+// value. Widen it to VARCHAR so numbers are stored/read as entered.
+$checkPhoneCol = @mysqli_query($con, "SHOW COLUMNS FROM emp_list LIKE 'phone_number'");
+if ($checkPhoneCol && $phoneColInfo = mysqli_fetch_assoc($checkPhoneCol)) {
+    if (stripos($phoneColInfo['Type'], 'int') !== false) {
+        @mysqli_query($con, "ALTER TABLE emp_list MODIFY COLUMN phone_number VARCHAR(15) NOT NULL DEFAULT ''");
+    }
+}
+
 // Default system allowed leaves sum from leave_types (Annual Leave Policy sum)
 $defaultSystemAllowedLeaves = 0;
 $lt_sum_q = @mysqli_query($con, "SELECT SUM(num_of_leave) as total FROM leave_types WHERE deleted_at IS NULL");
